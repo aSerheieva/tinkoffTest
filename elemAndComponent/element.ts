@@ -35,8 +35,11 @@ export const paymentPageElement:any = {
 
 export const paymentPageFormElement:any = {
     providerPayerCode:element(by.css('input[name="provider-payerCode"]')),
+    providerPayerCodeWait:element(by.css('input[name="provider-payerCode"].ui-input_focused')),
     providerPeriod:element(by.css('input[name="provider-period"]')),
+    providerPeriodWait:element(by.css('input[name="provider-period"].ui-input_focused')),
     providerSumFree:element.all(by.css('input[data-qa-file="StatelessInput"]')).get(0),
+    providerSumWait:element(by.css('input[data-qa-file="StatelessInput"].ui-input_focused')),
     providerSunPayment:element.all(by.css('input[data-qa-file="StatelessInput"]')).get(1),
     errorMsg: element.all(by.css('.ui-form-field-error-message')),
     errorField: element.all(by.xpath(`//*[contains(@class, 'error')] //input`)),

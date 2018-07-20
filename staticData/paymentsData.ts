@@ -9,4 +9,9 @@ export const paymentsData = {
     notFoundSearch: 'Ничего не найдено',
 
     unvalidText: 'тест?',
+    providerPayerCodeTest: '1111111',
+    providerPayerCodeTest2: '1111111111',
+    providerPeriodTest: '3423434',
+    providerPeriodTest2: '34.2343',
+
 };

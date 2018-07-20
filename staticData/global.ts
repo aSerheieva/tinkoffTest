@@ -13,4 +13,6 @@ export const commonTopMenuNames:any = {
 
 export const nameError:any = {
     errorEmpty: 'Поле обязательное',
+    errorUnvalidValue: 'Поле неправильно заполнено',
+    errorUncorrectedValue: 'Поле заполнено некорректно',
 }

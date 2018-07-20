@@ -89,13 +89,21 @@ describe(`Проверка вывода ошибок формы 'Оплатит�
     });
 
     it(`[P06] Negative. Проверка вывода ошибок валидации формы оплаты поле  "Код плательщика за ЖКУ в Москве" `, async() => {
-
-
+        await Input.sendText(paymentsData.providerPayerCodeTest, paymentPageFormElement.providerPayerCode , paymentPageFormElement.errorMsg.get(0) );
+        await expectMy(await paymentPageFormElement.providerPayerCode.getAttribute('value'), paymentsData.providerPayerCodeTest);
+        await expectMy(await paymentPageFormElement.errorMsg.get(0).getText(), nameError.errorUnvalidValue);
+        const helpCnt:number = await paymentPageFormElement.errorField.count();
+        await Input.sendText(paymentsData.providerPayerCodeTest+paymentsData.providerPayerCodeTest,
+                    paymentPageFormElement.providerPayerCode , paymentPageFormElement.providerPayerCodeWait, true);
+        await expectMy(await paymentPageFormElement.providerPayerCode.getAttribute('value'), paymentsData.providerPayerCodeTest2);
+        await expect((await paymentPageFormElement.errorMsg.count()) === helpCnt).toEqual(  false);
     });
-    //
-    // it(`[P07] Negative. Проверка вывода ошибок валидации формы оплаты поле  "За какой период оплачиваете коммунальные услуги" `, async() => {
-    //
-    // });
+
+    it(`[P07] Negative. Проверка вывода ошибок валидации формы оплаты поле  "За какой период оплачиваете коммунальные услуги" `, async() => {
+        await Input.sendText(paymentsData.providerPeriodTest, paymentPageFormElement.providerPeriod , paymentPageFormElement.errorMsg.get(1) );
+        await expectMy(await paymentPageFormElement.providerPeriod.getAttribute('value'), paymentsData.providerPeriodTest2);
+        await expectMy(await paymentPageFormElement.errorMsg.get(1).getText(), nameError.errorUncorrectedValue);
+    });
     //
     // it(`[P08] Negative. Проверка вывода ошибок валидации формы оплаты поле  "Сумма платежа, ₽" `, async() => {
     //
