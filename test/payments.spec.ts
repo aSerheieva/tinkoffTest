@@ -10,6 +10,7 @@ import {expectMy} from "../helpers/reporter";
 import {Button} from "../elemAndComponent/btnComponent";
 import {SearchInput} from "../elemAndComponent/searchComponent";
 import {Input} from "../elemAndComponent/inputComponent";
+import {StringArray} from "../utils/stringArray";
 
 describe(`Проверка станицы платежей`, () => {
 
@@ -104,9 +105,16 @@ describe(`Проверка вывода ошибок формы 'Оплатит�
         await expectMy(await paymentPageFormElement.providerPeriod.getAttribute('value'), paymentsData.providerPeriodTest2);
         await expectMy(await paymentPageFormElement.errorMsg.get(1).getText(), nameError.errorUncorrectedValue);
     });
-    //
-    // it(`[P08] Negative. Проверка вывода ошибок валидации формы оплаты поле  "Сумма платежа, ₽" `, async() => {
-    //
-    // });
+
+    it(`[P08] Negative. Проверка вывода ошибок валидации формы оплаты поле  "Сумма платежа, ₽" `, async() => {
+        await Input.sendText(paymentsData.providerSunPaymentTest, paymentPageFormElement.providerSunPayment , paymentPageFormElement.errorMsg.get(2) );
+        await expectMy(await paymentPageFormElement.providerSunPayment.getAttribute('value'), paymentsData.providerSunPaymentTest);
+        await expectMy(await paymentPageFormElement.errorMsg.get(2).getText(), nameError.errorMinSum);
+
+        await Input.sendText(paymentsData.providerSunPaymentTest2, paymentPageFormElement.providerSunPayment , paymentPageFormElement.errorMsg.get(2) );
+        await expectMy(await paymentPageFormElement.providerSunPayment.getAttribute('value'), StringArray.transformNumberToStringSum(paymentsData.providerSunPaymentTest2));
+        await expectMy(await paymentPageFormElement.errorMsg.get(2).getText(), nameError.errorMaxSum);
+
+    });
 
 });

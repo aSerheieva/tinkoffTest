@@ -13,5 +13,6 @@ export const paymentsData = {
     providerPayerCodeTest2: '1111111111',
     providerPeriodTest: '3423434',
     providerPeriodTest2: '34.2343',
-
+    providerSunPaymentTest: '1',
+    providerSunPaymentTest2: '4565165165',
 };

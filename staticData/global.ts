@@ -15,4 +15,6 @@ export const nameError:any = {
     errorEmpty: 'Поле обязательное',
     errorUnvalidValue: 'Поле неправильно заполнено',
     errorUncorrectedValue: 'Поле заполнено некорректно',
+    errorMinSum: 'Минимум — 10 ₽',
+    errorMaxSum: 'Максимум — 15 000 ₽',
 }
