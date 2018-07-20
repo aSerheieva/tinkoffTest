@@ -4,7 +4,7 @@ import {MyWait} from "../helpers/wait";
 import {commonElement} from "./element";
 
 
-export class mainMenu {
+export class MainMenu {
 
     public static async clickOnTopSecondMenu(name: string, waitElem: ElementFinder) {
         await myCreateAllureStep(`Клик по пункту в верхнем меню (второй уровень) ${name}`, async () => {
