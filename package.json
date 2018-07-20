@@ -1,0 +1,25 @@
+{
+  "name": "tinkofTest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "tsc",
+    "preprotractor": "npm run test && webdriver-manager update",
+    "protractor": "protractor tmp/protractor.config.js",
+    "posttest": "allure generate allure-results --clean -o allure-report || true"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jasmine": "^2.8.8",
+    "@types/node": "^10.5.2",
+    "allure-commandline": "^2.7.0",
+    "jasmine-allure-reporter": "^1.0.2",
+    "jasmine-spec-reporter": "^4.2.1",
+    "protractor": "^5.4.0",
+    "protractor-jasmine2-html-reporter": "0.0.7",
+    "typescript": "^2.9.2"
+  }
+}
