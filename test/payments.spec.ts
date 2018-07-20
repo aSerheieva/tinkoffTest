@@ -16,7 +16,8 @@ describe(`Проверка станицы платежей`, () => {
 
     beforeEach(async () => {
         await GlobalsMethods.goToUrl(urls.mainPage, mainPageElement.mainPageElement);
-        await MainMenu.clickOnBottomMenu(commonTopMenuNames.payment, paymentPageElement.paymentPageMenu);
+        await MainMenu.clickOnTopSecondMenu(commonTopMenuNames.payment, paymentPageElement.paymentPageMenu);
+        // await MainMenu.clickOnBottomMenu(commonTopMenuNames.payment, paymentPageElement.paymentPageMenu); // для проверки работы, из-за бага с верхнем меню
     });
 
     afterEach(async()=>{
@@ -60,7 +61,8 @@ describe(`Проверка вывода ошибок формы 'Оплатит�
 
     beforeEach(async () => {
         await GlobalsMethods.goToUrl(urls.mainPage, mainPageElement.mainPageElement);
-        await MainMenu.clickOnBottomMenu(commonTopMenuNames.payment, paymentPageElement.paymentPageMenu);
+        await MainMenu.clickOnTopSecondMenu(commonTopMenuNames.payment, paymentPageElement.paymentPageMenu);
+        // await MainMenu.clickOnBottomMenu(commonTopMenuNames.payment, paymentPageElement.paymentPageMenu); // для проверки работы, из-за бага с верхнем меню
         await PaymentMethod.setCityRegion(paymentsData.cityMoscowWithoutCity, paymentsData.cityMoscow);
         await SearchInput.sendText(paymentsData.serviceGKHMoscow, commonElement.searchInputRow.first());
         await SearchInput.selectFoundedElementByNumber(0, Button.returnByText(commonBtnNames.paymentInfoDept));
