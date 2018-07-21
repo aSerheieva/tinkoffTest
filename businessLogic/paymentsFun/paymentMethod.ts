@@ -35,11 +35,11 @@ export class PaymentMethod {
         });
     };
 
-    public static async scrollProviderList() {
+    public static async scrollProviderList(cnt: number) {
         await MyWait.waitElemIsClickable(paymentPageElement.paymentProviderList.get(0));
         let i: number = 0;
         let curVal: number = await paymentPageElement.paymentProviderList.count();
-        while(curVal%30 == 0) {
+        while(curVal%30 == 0 && i < cnt) {
             await browser.executeScript(`document.querySelectorAll('section[data-qa-file="UILayoutSection"] li')[${curVal-1}].scrollIntoView(false)`);
             await MyWait.waitElemIsClickable(paymentPageElement.paymentProviderList.get(curVal-1));
             curVal = await paymentPageElement.paymentProviderList.count();

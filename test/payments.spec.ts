@@ -58,10 +58,10 @@ describe(`Проверка станицы платежей`, () => {
     });
 
     it(`[P03.2] Отсутствие поставщика из Москвы в списке другого города через скролл`, async() => {
-        await GlobalsMethods.setJasmineTimeout(500000);
+        await GlobalsMethods.setJasmineTimeout(200000);
         await PaymentMethod.selectCategoryPaymentByName(paymentsData.paymentsType, paymentPageElement.paymentProviderList.last());
         await PaymentMethod.setCityRegion(paymentsData.cityStPetersburgWithoutCity, paymentsData.cityStPetersburg);
-        await PaymentMethod.scrollProviderList();
+        await PaymentMethod.scrollProviderList(20);
         await expect(await paymentPageElement.paymentProviderSection.getText()).not.toContain(paymentsData.serviceGKHMoscow);
         await GlobalsMethods.setJasmineTimeout(50000);
     });
