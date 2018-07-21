@@ -1,10 +1,10 @@
 import {async} from "q";
-import {GlobalsMethods} from "../logicBisness/globalMethod";
+import {GlobalsMethods} from "../businessLogic/globalMethod";
 import {commonBtnNames, commonTopMenuNames, nameError, urls} from "../staticData/global";
 import {commonElement, mainPageElement, paymentPageElement, paymentPageFormElement} from "../elemAndComponent/element";
 import {browser} from "protractor";
 import {MainMenu} from "../elemAndComponent/mainMenuComponrnt";
-import {PaymentMethod} from "../logicBisness/paymentsFun/paymentMethod";
+import {PaymentMethod} from "../businessLogic/paymentsFun/paymentMethod";
 import {paymentsData} from "../staticData/paymentsData";
 import {expectMy} from "../helpers/reporter";
 import {Button} from "../elemAndComponent/btnComponent";
@@ -17,7 +17,8 @@ describe(`Проверка станицы платежей`, () => {
     beforeEach(async () => {
         await GlobalsMethods.goToUrl(urls.mainPage, mainPageElement.mainPageElement);
         await MainMenu.clickOnTopSecondMenu(commonTopMenuNames.payment, paymentPageElement.paymentPageMenu);
-        // await MainMenu.clickOnBottomMenu(commonTopMenuNames.payment, paymentPageElement.paymentPageMenu); // для проверки работы, из-за бага с верхнем меню
+        //в верхнем меню баг, для проверки остальных шагов исп. нижнее
+        // await MainMenu.clickOnBottomMenu(commonTopMenuNames.payment, paymentPageElement.paymentPageMenu);
     });
 
     afterEach(async()=>{
@@ -29,7 +30,7 @@ describe(`Проверка станицы платежей`, () => {
    it(`[P01] Перехода на форму 'Оплатить ЖКУ в Москве'`, async() => {
         await PaymentMethod.selectCategoryPaymentByName(paymentsData.paymentsType, paymentPageElement.paymentProviderList.last());
         await PaymentMethod.setCityRegion(paymentsData.cityMoscowWithoutCity, paymentsData.cityMoscow);
-        await expectMy(await paymentPageElement.paymentProviderList.first().getText(), paymentsData.serviceGKHMoscow);
+        await expectMy(await paymentPageElement.paymentProviderList.get(0).getText(), paymentsData.serviceGKHMoscow);
         await  PaymentMethod.clickOnProviderByNumber(0);
         await GlobalsMethods.clickOnTabsByName(paymentsData.nameTwoTabs, Button.returnByText(commonBtnNames.paymentMoscow));
         await expect(await paymentPageFormElement.providerPayerCode.isPresent()).toEqual(true);
@@ -39,8 +40,9 @@ describe(`Проверка станицы платежей`, () => {
     });
 
     it(`[P02] Быстрый поиск`, async() => {
+        await PaymentMethod.setCityRegion(paymentsData.cityMoscowWithoutCity, paymentsData.cityMoscow);
         await SearchInput.sendText(paymentsData.serviceGKHMoscow, commonElement.searchInputRow.first());
-        await SearchInput.selectFoundedElementByNumber(0, Button.returnByText(commonBtnNames.paymentInfoDept));
+        await SearchInput.selectFoundedElementByName(paymentsData.serviceGKHMoscow, Button.returnByText(commonBtnNames.paymentInfoDept));
         await GlobalsMethods.clickOnTabsByName(paymentsData.nameTwoTabs, Button.returnByText(commonBtnNames.paymentMoscow));
         await expect(await paymentPageFormElement.providerPayerCode.isPresent()).toEqual(true);
         await expect(await paymentPageFormElement.providerPeriod.isPresent()).toEqual(true);
@@ -48,11 +50,20 @@ describe(`Проверка станицы платежей`, () => {
         await expect(await paymentPageFormElement.providerSunPayment.isPresent()).toEqual(true);
     });
 
-    it(`[P03] Отсутствие поставщика из Москвы в списке другого города`, async() => {
+    it(`[P03.1] Отсутствие поставщика из Москвы в списке другого города через строку поиска`, async() => {
         await PaymentMethod.selectCategoryPaymentByName(paymentsData.paymentsType, paymentPageElement.paymentProviderList.last());
         await PaymentMethod.setCityRegion(paymentsData.cityStPetersburgWithoutCity, paymentsData.cityStPetersburg);
         await SearchInput.sendText(paymentsData.serviceGKHMoscow, commonElement.searchInputRow.get(0));
         await expectMy(await commonElement.searchInputRow.get(0).getText(), paymentsData.notFoundSearch);
+    });
+
+    it(`[P03.2] Отсутствие поставщика из Москвы в списке другого города через скролл`, async() => {
+        await GlobalsMethods.setJasmineTimeout(500000);
+        await PaymentMethod.selectCategoryPaymentByName(paymentsData.paymentsType, paymentPageElement.paymentProviderList.last());
+        await PaymentMethod.setCityRegion(paymentsData.cityStPetersburgWithoutCity, paymentsData.cityStPetersburg);
+        await PaymentMethod.scrollProviderList();
+        await expect(await paymentPageElement.paymentProviderSection.getText()).not.toContain(paymentsData.serviceGKHMoscow);
+        await GlobalsMethods.setJasmineTimeout(50000);
     });
 
 });
@@ -62,10 +73,11 @@ describe(`Проверка вывода ошибок формы 'Оплатит�
     beforeEach(async () => {
         await GlobalsMethods.goToUrl(urls.mainPage, mainPageElement.mainPageElement);
         await MainMenu.clickOnTopSecondMenu(commonTopMenuNames.payment, paymentPageElement.paymentPageMenu);
-        // await MainMenu.clickOnBottomMenu(commonTopMenuNames.payment, paymentPageElement.paymentPageMenu); // для проверки работы, из-за бага с верхнем меню
+        //в верхнем меню баг, для проверки остальных шагов исп. нижнее
+        // await MainMenu.clickOnBottomMenu(commonTopMenuNames.payment, paymentPageElement.paymentPageMenu);
         await PaymentMethod.setCityRegion(paymentsData.cityMoscowWithoutCity, paymentsData.cityMoscow);
         await SearchInput.sendText(paymentsData.serviceGKHMoscow, commonElement.searchInputRow.first());
-        await SearchInput.selectFoundedElementByNumber(0, Button.returnByText(commonBtnNames.paymentInfoDept));
+        await SearchInput.selectFoundedElementByName(paymentsData.serviceGKHMoscow, Button.returnByText(commonBtnNames.paymentInfoDept));
         await GlobalsMethods.clickOnTabsByName(paymentsData.nameTwoTabs, Button.returnByText(commonBtnNames.paymentMoscow));
     });
 

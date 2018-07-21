@@ -36,7 +36,6 @@ export async function myCreateAllureStep (description:string, stepFunc: Function
     })();
 }
 
-//можно улучить, например передавать метод
 export async function expectMy (current:string, expected: string) {
     await allure.createStep(`Сравнение текущего ${current} с ожидаемым ${expected}`, async () => {
         await expect(current).toEqual(expected);

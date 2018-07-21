@@ -2,7 +2,6 @@ import {browser, ElementFinder, ExpectedConditions as expCon} from "protractor";
 
 export class MyWait {
 
-    //можно добавить информацию про то что ожидается и вывовидить в случае ошибки
     public static async waitElemIsDisplayed (webElement:ElementFinder) {
         try {
             await browser.wait(expCon.visibilityOf(webElement), browser.params.waitWebElemTime );

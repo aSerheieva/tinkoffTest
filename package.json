@@ -6,7 +6,9 @@
   "scripts": {
     "test": "tsc",
     "preprotractor": "npm run test && webdriver-manager update",
-    "protractor": "protractor tmp/protractor.config.js"
+    "protractor": "protractor tmp/protractor.config.js",
+    "postprotractor": "allure generate ./resOut/allureReports/ --clean -o allure-report || true",
+    "generateAllure": "allure generate ./resOut/allureReports/ --clean -o allure-report || true"
   },
   "keywords": [],
   "author": "",

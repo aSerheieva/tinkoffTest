@@ -3,7 +3,7 @@ export const paymentsData = {
     cityStPetersburg: 'г. Санкт-Петербург',
     cityMoscowWithoutCity: 'Москве',
     cityStPetersburgWithoutCity: 'Санкт-Петербурге',
-    paymentsType: 'ЖКХ', //Комунальные платежи
+    paymentsType: 'ЖКХ',
     serviceGKHMoscow:'ЖКУ-Москва',
     nameTwoTabs:'Оплатить ЖКУ в Москве',
     notFoundSearch: 'Ничего не найдено',

@@ -22,6 +22,7 @@ export const mainPageElement:any = {
 export const paymentPageElement:any = {
     paymentsCatalogHeader: element(by.css('div[data-qa-file="PaymentsCatalogHeader"]')),
     paymentPageMenu: element(by.css('div[data-qa-file="PaymentsPageMenu"]')),
+    paymentProviderSection: element(by.css('section[data-qa-file="UILayoutSection"]')),
     paymentProviderList: element.all(by.css('section[data-qa-file="UILayoutSection"] li')),
     paymentRegion: element(by.xpath(`//span[contains(@class, 'PaymentsCatalogHeader__regionSelect')]`)),
     paymentRegionList: element.all(by.css('a[data-qa-file="Link"]')),

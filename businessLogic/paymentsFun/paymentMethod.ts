@@ -35,12 +35,16 @@ export class PaymentMethod {
         });
     };
 
-    public static async checkR(num: number) {
-        await myCreateAllureStep(`Выбрать поставщика из списка под номером ${num}`, async () => {
-            await paymentPageElement.paymentProviderList.get(num).click();
-            await MyWait.waitElemIsDisplayed(Button.returnByText(commonBtnNames.paymentInfoDept));
-
-        });
-    };
+    public static async scrollProviderList() {
+        await MyWait.waitElemIsClickable(paymentPageElement.paymentProviderList.get(0));
+        let i: number = 0;
+        let curVal: number = await paymentPageElement.paymentProviderList.count();
+        while(curVal%30 == 0) {
+            await browser.executeScript(`document.querySelectorAll('section[data-qa-file="UILayoutSection"] li')[${curVal-1}].scrollIntoView(false)`);
+            await MyWait.waitElemIsClickable(paymentPageElement.paymentProviderList.get(curVal-1));
+            curVal = await paymentPageElement.paymentProviderList.count();
+            i++;
+        }
+    }
 
 }

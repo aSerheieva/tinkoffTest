@@ -6,6 +6,10 @@ import {commonElement} from "../elemAndComponent/element";
 
 export class GlobalsMethods {
 
+    public static async setJasmineTimeout(value: number) {
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = value
+    }
+
     public static async goToUrl(url: string, waitElem: ElementFinder) {
         await myCreateAllureStep(`Переход на страницу ${url}`, async () => {
             await browser.get(url);

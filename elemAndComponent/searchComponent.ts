@@ -14,9 +14,19 @@ export class SearchInput {
         });
     };
 
-    public static async selectFoundedElementByNumber(num:number, waitElem: ElementFinder) {
-        await myCreateAllureStep(`Выбрать '${num}' элемент в результатах поиска`, async () => {
-            await commonElement.searchInputRow.get(num).click();
+    public static async selectFoundedElementByName(name:string, waitElem: ElementFinder) {
+        await myCreateAllureStep(`Выбрать пункт '${name}' в результатах поиска`, async () => {
+            let indexList:number = -1;
+            await commonElement.searchInputRow.each(async function(element, index) {
+                let text:string = await element.getText();
+                if ( text.includes(name)){
+                    indexList = index;
+                }
+            });
+            if (indexList == -1){
+                throw `Пункта ${name} нет в списке`
+            }
+            await commonElement.searchInputRow.get(indexList).click();
             await MyWait.waitElemIsClickable(waitElem);
         });
     };
